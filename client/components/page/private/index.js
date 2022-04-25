@@ -1,10 +1,15 @@
 import PublicPage     from "../public";
-import { getSession, useSession } from "next-auth/react";
+import cookie         from 'react-cookies';
 
 export class PrivatePage extends PublicPage{
 
   static async getInitialProps(ctx){
     const publicPageProps = await super.getInitialProps(ctx);
+    const token = cookie.load('token');
+    
+    if (!token) {
+      ctx.router.redirect('login',ctx,{});
+    }
     
     return {
       ...publicPageProps
@@ -12,11 +17,6 @@ export class PrivatePage extends PublicPage{
   }
 
   async componentDidMount(){
-    const session = await getSession(this.context);
-
-    if (!session) {
-      this.context.router.redirect('login',this.context,{});
-    }
   }
 
   render(){

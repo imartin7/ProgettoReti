@@ -31,7 +31,6 @@ class TodaysApp extends App{
     } = this.props;
 
     const services = this.initServices();
-    console.log("SERVICES",services)
     return (
       <>
         <Provider store={store}>

@@ -45,7 +45,11 @@
   margin-bottom: 20px;
 }
 
-.formBlock input[type="text"], .formBlock input[type="password"] {
+.error{
+  color: red;
+}
+
+.formBlock input[type="text"], .formBlock input[type="password"] , .formBlock input[type="email"]{
   border: none;
   border-bottom: 1px solid #fff;
   background: transparent;
@@ -69,4 +73,23 @@
   cursor: pointer;
   background: #ffc107;
   color: #000;
+}
+
+.providers{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.providers .authProvider{
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 10px 20px;
+  color: white;
+}
+
+.providers .google::before{
+  content: '\ea88';
+  font-family: 'google-icons';
+  margin-right: 5px;
 }
