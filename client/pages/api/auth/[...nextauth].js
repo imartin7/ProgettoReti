@@ -1,5 +1,8 @@
-import NextAuth from "next-auth"
-import GoogleProvider from "next-auth/providers/google"
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
+import cookie         from 'react-cookies';
+import _get           from 'lodash/get';
+
 require('dotenv').config()
 
 export default NextAuth({
@@ -11,20 +14,21 @@ export default NextAuth({
       authorizationUrl: 'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
     })
   ],
-  jwt: {
-    encryption: true
-  },
-  /* callbacks: {
-    jwt: async ({ token, user }) => {
-        user && (token.user = user)
-        console.log("JWT", token, user)
-        return token
-    },
-    session: async ({ session, token }) => {
-        session.user = token.user
-        console.log("SESSION",session, token)
-        return session
+  callbacks: {
+    async signIn({ user, account, profile }) {
+      const isAllowedToSignIn = true
+
+      if (isAllowedToSignIn) {
+        const token = _get(account, 'id_token');
+        const { id, name, email, image } = user;
+        cookie.save('token', token);
+        setUser({
+          id,name,email,image,token
+        })
+        return true
+      } else {
+        return '/account/login'
+      }
     }
-  }, */
-  database: process.env.DATABASE_URL
-})
+  }
+});

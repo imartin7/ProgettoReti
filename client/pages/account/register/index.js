@@ -1,9 +1,13 @@
-import PublicPage from "../../../components/page/public";
-import styles from "../../../styles/account/form.module.css";
-import Link   from "next/link";
-import _get   from 'lodash/get';
+import PublicPage   from "../../../components/page/public";
+import styles       from "../../../styles/account/form.module.css";
+import Link         from "next/link";
+import { connect }  from 'react-redux';
+import _get         from 'lodash/get';
+import { register } from '../../../store/actions/user/register';
 
 export class Register extends PublicPage{
+
+  static mapDispatchToProps = { register };
 
   state = {
     passwdValidation: true
@@ -11,6 +15,7 @@ export class Register extends PublicPage{
 
   handleRegister = (event) => {
     event.preventDefault();
+    const { register } = this.props;
     const form = _get(event, 'target');
     const name = _get(form, '[0].value');
     const lastname = _get(form, '[1].value');
@@ -18,12 +23,18 @@ export class Register extends PublicPage{
     const password = _get(form, '[3].value');
     const passwordConfirm = _get(form, '[4].value');
     const email = _get(form, '[5].value');
-    
+
     if(password !== passwordConfirm){
       this.setState({passwdValidation: false})
     }else{
       this.setState({passwdValidation: true})
-      //registro
+      register(this.context, {
+        name,
+        lastname,
+        username,
+        email,
+        password
+      })
     }
   }
 
@@ -63,4 +74,4 @@ export class Register extends PublicPage{
   }
 }
 
-export default Register;
+export default connect(null,Register.mapDispatchToProps)(Register);

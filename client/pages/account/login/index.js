@@ -15,6 +15,12 @@ export class Login extends PublicPage{
     this.setState({providers})
   }
 
+  logInNextAuth = (provider) => () => {
+    signIn(provider, {
+      callbackUrl: _get(this.router.getRoute('myAccount'), 'href'),
+    })
+  }
+
   render(){
     const {providers} = this.state;
 
@@ -36,10 +42,7 @@ export class Login extends PublicPage{
           <div className={styles.providers}>
           { 
             _map(providers, (value, provider) => {
-              return <button className={`${styles.authProvider} ${_get(styles, provider)}`} key={provider} onClick={() => 
-              signIn(provider, {
-                callbackUrl: _get(this.router.getRoute('myAccount'), 'href'),
-              })}>Sign in with {_get(value, 'name')}</button>
+              return <button className={`${styles.authProvider} ${_get(styles, provider)}`} key={provider} onClick={this.logInNextAuth(provider)}>Sign in with {_get(value, 'name')}</button>
             })
           }    
           </div>

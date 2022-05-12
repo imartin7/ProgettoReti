@@ -16,9 +16,6 @@ export class PrivatePage extends PublicPage{
     }
   }
 
-  async componentDidMount(){
-  }
-
   render(){
     return (
       <>
