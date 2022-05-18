@@ -4,17 +4,25 @@ import Link         from "next/link";
 import { connect }  from 'react-redux';
 import _get         from 'lodash/get';
 import { register } from '../../../store/actions/user/register';
-
+import {SUCCESS_CODE} from '../../../settings/api';
 export class Register extends PublicPage{
 
   static mapDispatchToProps = { register };
 
   state = {
-    passwdValidation: true
+    passwdValidation: true,
+    error: null
   }
 
-  handleRegister = (event) => {
+  /**
+   * @method
+   * User registration handler
+   * 
+   * @param {Event} event with form data
+   */
+  handleRegister = async (event) => {
     event.preventDefault();
+    let error = null;
     const { register } = this.props;
     const form = _get(event, 'target');
     const name = _get(form, '[0].value');
@@ -28,18 +36,27 @@ export class Register extends PublicPage{
       this.setState({passwdValidation: false})
     }else{
       this.setState({passwdValidation: true})
-      register(this.context, {
+      const response = JSON.parse(await register(this.context, {
         name,
         lastname,
         username,
         email,
         password
-      })
+      }))
+
+
+      if(_get(response, 'code') == SUCCESS_CODE){
+        this.router.redirect('login');
+      }else{
+        console.log(response)
+        this.setState({error: _get(response, 'msg')})
+      }
     }
   }
 
   render(){
-    const {passwdValidation} = this.state;
+    const {passwdValidation,error} = this.state;
+    console.log("STATE ERROR", error)
     return (
       <div className={styles.formContainer}>
         <form className={styles.formBlock} onSubmit={this.handleRegister}>
@@ -68,6 +85,7 @@ export class Register extends PublicPage{
           <Link {...this.router.getRoute('login')}>
             <a href="#">Already have an account?</a>
           </Link>
+          {!!error && <span className={styles.errorMsg}>{error}</span>}
         </form>
       </div>
     );
