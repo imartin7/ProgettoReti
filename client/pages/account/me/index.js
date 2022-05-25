@@ -2,9 +2,18 @@ import PrivatePage from "../../../components/page/private";
 import { signOut } from 'next-auth/react'
 import _get from 'lodash/get'
 import styles from "../../../styles/account/me.module.css";
+import { connect }  from 'react-redux';
 
 export class AccountMe extends PrivatePage{
+
+  static mapStateToProps(store){
+    const { user } = store;
+    return {user};
+  }
+
   render(){
+    const { user } = this.props;
+
     return (
       <div className="account-me">
         <section className={styles.perfilUsuario}>
@@ -19,7 +28,7 @@ export class AccountMe extends PrivatePage{
                   </a>
                 </div>
                 <div className={styles.datosPerfil}>
-                  <h4 className={styles.tituloUsuario}>Nombre de usuario</h4>
+                  <h4 className={styles.tituloUsuario}>{_get(user,"username")}</h4>
                   <p className={styles.bioUsuario}>Descripcion</p>
                   <ul className={styles.listaPerfil}>
                     <li>35 Seguidores</li>
@@ -48,4 +57,4 @@ export class AccountMe extends PrivatePage{
   }
 }
 
-export default AccountMe;
+export default connect(AccountMe.mapStateToProps,null)(AccountMe);

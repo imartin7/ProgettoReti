@@ -8,7 +8,7 @@ export const register = (ctx, variables) => {
       },
       body: JSON.stringify(variables),
     });
-    const body = await response.text();
-    return body;
+    
+    return JSON.parse(await response.text());
   }
 }

@@ -10,6 +10,11 @@ var corsOptions = {
 }
 
 router.get('/api/init', controller.initDatabase);
+router.post('/api/login', 
+    body('email').isEmail().normalizeEmail(),
+    body('password').not().isEmpty().escape(), 
+    controller.loginUser
+);
 router.post('/api/register', 
     body('email').isEmail().normalizeEmail(),
     body('name').not().isEmpty().escape(),

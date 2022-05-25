@@ -22,7 +22,6 @@ export class Register extends PublicPage{
    */
   handleRegister = async (event) => {
     event.preventDefault();
-    let error = null;
     const { register } = this.props;
     const form = _get(event, 'target');
     const name = _get(form, '[0].value');
@@ -36,19 +35,18 @@ export class Register extends PublicPage{
       this.setState({passwdValidation: false})
     }else{
       this.setState({passwdValidation: true})
-      const response = JSON.parse(await register(this.context, {
+      const response = await register(this.context, {
         name,
         lastname,
         username,
         email,
         password
-      }))
+      })
 
 
       if(_get(response, 'code') == SUCCESS_CODE){
         this.router.redirect('login');
       }else{
-        console.log(response)
         this.setState({error: _get(response, 'msg')})
       }
     }
@@ -56,7 +54,7 @@ export class Register extends PublicPage{
 
   render(){
     const {passwdValidation,error} = this.state;
-    console.log("STATE ERROR", error)
+
     return (
       <div className={styles.formContainer}>
         <form className={styles.formBlock} onSubmit={this.handleRegister}>
