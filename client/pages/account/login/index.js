@@ -50,7 +50,7 @@ export class Login extends PublicPage{
 
 
     if(_get(response, 'code') == SUCCESS_CODE){
-      cookie.save('token', _get(response, 'data.token'));
+      cookie.save('token', _get(response, 'data.token'), { path: '/' });
       this.router.redirect('myAccount');
     }else{
       this.setState({error: _get(response, 'msg')})
@@ -64,7 +64,7 @@ export class Login extends PublicPage{
     return (
       <div className={styles.formContainer}>
         <div className={styles.formBlock}>
-          <form onSubmit={this.handleLogin}>
+          <form className={styles.flexDisplay} onSubmit={this.handleLogin}>
             <img className={styles.logo} src={"/assets/logo/logo.png"} alt="Logo"/>
       
             <label>Email</label>

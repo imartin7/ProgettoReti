@@ -21,6 +21,9 @@ export const reducers = (state=user, action) => {
         image:  _get(action, 'user.image'),
         token:  _get(action, 'user.token')
       }
+    case "CLEAN_USER_DATA":{
+      return user
+    }
     default:
       return state;
   }

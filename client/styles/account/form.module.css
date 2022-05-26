@@ -25,6 +25,11 @@
   flex-direction: column;
 }
 
+.flexDisplay {
+  display: flex;
+  flex-direction: column;
+}
+
 .formBlock .logo{
   min-width: 100px  !important;
   min-height: 100px !important;

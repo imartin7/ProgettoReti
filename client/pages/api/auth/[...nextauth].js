@@ -21,7 +21,7 @@ export default NextAuth({
       if (isAllowedToSignIn) {
         const token = _get(account, 'id_token');
         const { id, name, email, image } = user;
-        cookie.save('token', token);
+        cookie.save('token', token, { path: '/' });
         setUser({
           id,name,email,image,token
         })

@@ -1,14 +1,30 @@
 import PrivatePage from "../../../components/page/private";
 import { signOut } from 'next-auth/react'
-import _get from 'lodash/get'
-import styles from "../../../styles/account/me.module.css";
+import { cleanUserData } from '../../../store/actions/user/base'
+import _get         from 'lodash/get'
+import styles       from "../../../styles/account/me.module.css";
 import { connect }  from 'react-redux';
+import cookie       from 'react-cookies';
+import Link         from "next/link";
 
 export class AccountMe extends PrivatePage{
 
   static mapStateToProps(store){
     const { user } = store;
     return {user};
+  }
+
+  static mapDispatchToProps = {
+    cleanUserData
+  }
+
+  /**
+   * Logs out user
+   */
+  handleSignout = () => {
+    signOut({ callbackUrl: _get(this.router.getRoute('login'), 'href')})
+    cookie.remove('token');
+    this.props.cleanUserData()
   }
 
   render(){
@@ -29,25 +45,19 @@ export class AccountMe extends PrivatePage{
                 </div>
                 <div className={styles.datosPerfil}>
                   <h4 className={styles.tituloUsuario}>{_get(user,"username")}</h4>
-                  <p className={styles.bioUsuario}>Descripcion</p>
-                  <ul className={styles.listaPerfil}>
-                    <li>35 Seguidores</li>
-                    <li>7 Seguidos</li>
-                    <li>32 Publicaciones</li>
-                  </ul>
               </div>
               <div className={styles.opcionesPerfil}>
-                <button type="">Cambiar portada</button>
                 <button type=""><i className={styles.herramienta}></i></button>
-                <button onClick={() => signOut({ callbackUrl: _get(this.router.getRoute('login'), 'href')})}>Sign Out</button>
+                <button onClick={this.handleSignout}>Sign Out</button>
               </div>
             </div>
             <div className={styles.menuPerfil}>
               <ul>
-                <li><a href="#" title=""><i className={styles.iconoPerfil}></i> Publicaciones</a></li>
-                <li><a href="#" title=""><i className={styles.iconoPerfil}></i> Informacion</a></li>
-                <li><a href="#" title=""><i className={styles.iconoPerfil}></i> Amigos 43</a></li>
-                <li><a href="#" title=""><i className={styles.iconoPerfil}></i> Fotos</a></li>
+                <li>
+                  <Link {...this.router.getRoute('chat')}>
+                    <a href="#"><i className={styles.iconoPerfil}></i> Chat</a>
+                  </Link>
+                  </li>
               </ul>
             </div>
           </div>
@@ -57,4 +67,4 @@ export class AccountMe extends PrivatePage{
   }
 }
 
-export default connect(AccountMe.mapStateToProps,null)(AccountMe);
+export default connect(AccountMe.mapStateToProps,AccountMe.mapDispatchToProps)(AccountMe);

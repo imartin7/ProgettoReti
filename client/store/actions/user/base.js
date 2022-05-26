@@ -4,3 +4,10 @@ export const setUserData = (user) => {
     user
   }
 }
+
+export const cleanUserData = (user) => {
+  return {
+    type: "CLEAN_USER_DATA",
+    user
+  }
+}

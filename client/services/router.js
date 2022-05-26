@@ -31,6 +31,7 @@ class TodaysRouter {
       'login':   { href: '/account/login', as: '/account/login' },
       'register':{ href: '/account/register', as: '/account/register' },
       'myAccount':{ href: '/account/me', as: '/account/me' },
+      'chat':     { href: '/chat', as: '/chat' }
     };
   }
 
