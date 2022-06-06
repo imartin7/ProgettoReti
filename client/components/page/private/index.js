@@ -6,7 +6,6 @@ export class PrivatePage extends PublicPage{
   static async getInitialProps(ctx){
     const publicPageProps = await super.getInitialProps(ctx);
     const token = cookie.load('token');
-    console.log("token", token)
     if (!token) {
       ctx.router.redirect('login',ctx,{});
     }

@@ -1,6 +1,6 @@
 .perfilUsuario {
-  background: linear-gradient(#3FD0F4, transparent);
-  color: #333;
+  background: linear-gradient(#164d8b, transparent);
+  color: rgb(218, 34, 34);
 }
 .perfilUsuario .sombra {
   position: absolute;
@@ -51,6 +51,11 @@
   border: 8px solid #FFFFFF;
   box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);
 }
+.perfilUsuario .avatarPerfil .fondo{
+  height: 100%;
+  object-fit: cover;
+}    
+
 .perfilUsuario .cambiarFoto {
   position: absolute;
   width: 100%;
@@ -117,12 +122,18 @@
   border: 0;
   padding: 8px 20px;
   border-radius: 8px;
-  background-color: rgba(0, 0, 0, .5);
+  font-weight: bold;
+  background-color: rgba(29, 26, 26, 0.836);
   color: #fff;
   cursor: pointer;
 }
+
+.perfilUsuario .opcionesPerfil button:hover {
+  background-color: rgba(41, 49, 61, 0.836);
+}
 .perfilUsuario .menuPerfil ul {
   display: flex;
+  justify-content: flex-end;
   list-style: none;
   margin-left: calc(200px + 8rem);
   width: calc(100% - 200px - 8rem);
@@ -138,10 +149,13 @@
   font-weight: bold;
   border-radius: 8px;
   transition: all ease-in 100ms;
+  border: 0;
+  background-color: rgba(29, 26, 26, 0.836);
+  color: #fff;
 }
 .perfilUsuario .menuPerfil a:hover {
-  background-color: #4CB0C6;
-  color: #fff;
+  background-color: rgba(41, 49, 61, 0.836);
+
 }
 .perfilUsuario .iconoPerfil {
   display: none;

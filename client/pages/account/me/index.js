@@ -6,8 +6,17 @@ import styles       from "../../../styles/account/me.module.css";
 import { connect }  from 'react-redux';
 import cookie       from 'react-cookies';
 import Link         from "next/link";
+import React        from "react";
+import { storage }  from "../../../firebase.config";
+import { getDownloadURL, ref, uploadBytes }      from "firebase/storage";
+import { v4 }       from "uuid";
+import { setLogo }  from "../../../store/actions/user/logo"
+import {SUCCESS_CODE} from '../../../settings/api';
 
 export class AccountMe extends PrivatePage{
+
+
+  inputRef = React.createRef();
 
   static mapStateToProps(store){
     const { user } = store;
@@ -15,7 +24,8 @@ export class AccountMe extends PrivatePage{
   }
 
   static mapDispatchToProps = {
-    cleanUserData
+    cleanUserData,
+    setLogo
   }
 
   /**
@@ -27,9 +37,30 @@ export class AccountMe extends PrivatePage{
     this.props.cleanUserData()
   }
 
+  openFileUploader = () => {
+    const { current } = this.inputRef;
+    !!current && current.click();
+  }
+
+  selectImage = async (event) => {
+    const {user} = this.props;
+    const upload = _get(event, 'target.files.[0]');
+    if(!!upload){
+      const imgRef = ref(storage, `users/${_get(user,'username')}/images/logo/${v4()}-${upload.name}`)
+      await uploadBytes(imgRef, upload).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+        const {user,setLogo} = this.props;
+        setLogo(this.context, {
+            id: _get(user, 'id'),
+            url
+          })
+        })
+      });
+    }
+  }
+
   render(){
     const { user } = this.props;
-
     return (
       <div className="account-me">
         <section className={styles.perfilUsuario}>
@@ -37,8 +68,9 @@ export class AccountMe extends PrivatePage{
             <div className={styles.portadaPerfil}>
               <div className={styles.sombra}></div>
                 <div className={styles.avatarPerfil}>
-                  <img className={styles.fondo} src={"/assets/logo/logo.png"} alt="img"/>
-                  <a href="#" className={styles.cambiarFoto}>
+                  <img className={styles.fondo} src={_get(user, 'image')} alt="img"/>
+                  <a onClick={this.openFileUploader} className={styles.cambiarFoto}>
+                    <input type="file" ref={this.inputRef} accept="image/*" hidden onChange={this.selectImage}/>
                     <i className={styles.camera}></i> 
                     <span>Change Photo</span>
                   </a>
@@ -47,7 +79,6 @@ export class AccountMe extends PrivatePage{
                   <h4 className={styles.tituloUsuario}>{_get(user,"username")}</h4>
               </div>
               <div className={styles.opcionesPerfil}>
-                <button type=""><i className={styles.herramienta}></i></button>
                 <button onClick={this.handleSignout}>Sign Out</button>
               </div>
             </div>
@@ -55,7 +86,7 @@ export class AccountMe extends PrivatePage{
               <ul>
                 <li>
                   <Link {...this.router.getRoute('chat')}>
-                    <a href="#"><i className={styles.iconoPerfil}></i> Chat</a>
+                    <a><i className={styles.iconoPerfil}></i>Chat</a>
                   </Link>
                   </li>
               </ul>

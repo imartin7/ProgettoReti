@@ -23,4 +23,9 @@ router.post('/api/register',
     body('password').not().isEmpty().escape(), 
     controller.registerUser    
 );
+router.post('/api/user/setLogo', 
+    body('id').not().isEmpty().escape(),
+    body('url').not().isEmpty().escape(),
+    controller.setUserLogo    
+);
 module.exports = router;

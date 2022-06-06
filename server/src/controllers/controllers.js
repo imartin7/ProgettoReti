@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator');
 const database = require('../db');
 const bcrypt   = require("bcrypt");
 const jwt      = require("jsonwebtoken");
-
+const htmlEntities = require("html-entities");
 const SUCCESS_CODE      = 200;
 const ERROR_CODE        = 400;
 const SERVER_ERROR_CODE = 500;
@@ -125,8 +125,57 @@ const loginUser = async (req, res) => {
 };
 
 
+const setUserLogo = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (errors.array().length > 0) {
+      res.send(errors.array());
+  } else {
+    let sqlQuery = `UPDATE users SET image = ? WHERE id = ?`;
+    let data = [htmlEntities.decode(req.body.url), req.body.id];
+
+    database.query(sqlQuery, data, (err, row) => {
+      if (err) {
+        res.send({
+          code: SERVER_ERROR_CODE,
+          msg: "Unknown error"
+        });
+        return;
+      }
+
+      data = [req.body.id];
+      sqlQuery = "Select id,name,lastname,username,email,image from users where id = ?";
+
+      database.query(sqlQuery, data, (err, row) => {
+        if (err) {
+          res.send({
+            code: SERVER_ERROR_CODE,
+            msg: "Unknown error"
+          });
+          return;
+        }
+        
+        res.send({
+          code: SUCCESS_CODE,
+          msg: "Image set properly",
+          data: {
+            email:    row[0].email,
+            id:       row[0].id,
+            image:    row[0].image,
+            lastname: row[0].lastname,
+            name:     row[0].name,
+            username: row[0].username
+          }
+        });
+    
+      });
+    });
+  }
+};
+
 module.exports = {
   initDatabase,
   loginUser,
-  registerUser
+  registerUser,
+  setUserLogo
 }
