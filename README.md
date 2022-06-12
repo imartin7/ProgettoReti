@@ -45,3 +45,7 @@ I have used Github to store the project.
 4 : Login Oauth
 6 : Docker
 7 : Github and README
+
+
+Author: Inés Martín Mateos
+Subject: Reti di Calcolatori
