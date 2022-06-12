@@ -1,10 +1,11 @@
 import "../styles/globals.css";
-import { wrapper, store } from "../store/store";
+import { persistor, store } from "../store/store";
 import { Provider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import App          from 'next/app';
 import TodaysRouter from "../services/router";
 import Context      from "../context";
+import { PersistGate } from 'redux-persist/integration/react';
 
 class TodaysApp extends App{
   static async getInitialProps(appContext){
@@ -34,11 +35,13 @@ class TodaysApp extends App{
     return (
       <>
         <Provider store={store}>
-          <Context.Provider value={services}>
-            <SessionProvider session={pageProps.session}>
-              <Component {...pageProps} />
-            </SessionProvider>
-          </Context.Provider>
+          <PersistGate loading={null} persistor={persistor}>
+            <Context.Provider value={services}>
+              <SessionProvider session={pageProps.session}>
+                <Component {...pageProps} />
+              </SessionProvider>
+            </Context.Provider>
+          </PersistGate>
         </Provider>
       </>
     );
@@ -46,4 +49,4 @@ class TodaysApp extends App{
   
 }
 
-export default wrapper.withRedux(TodaysApp);
+export default TodaysApp;

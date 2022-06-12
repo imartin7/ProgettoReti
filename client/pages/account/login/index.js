@@ -7,7 +7,8 @@ import { connect }    from 'react-redux';
 import { login }      from '../../../store/actions/user/login';
 import {SUCCESS_CODE} from '../../../settings/api';
 import { signIn, getProviders } from 'next-auth/react'
-import cookie         from 'react-cookies';
+import { setCookie }  from 'nookies'
+
 
 export class Login extends PublicPage{
 
@@ -50,7 +51,7 @@ export class Login extends PublicPage{
 
 
     if(_get(response, 'code') == SUCCESS_CODE){
-      cookie.save('token', _get(response, 'data.token'), { path: '/' });
+      setCookie(null, 'token', _get(response, 'data.token'), { path: '/' });
       this.router.redirect('myAccount');
     }else{
       this.setState({error: _get(response, 'msg')})

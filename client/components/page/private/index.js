@@ -1,11 +1,12 @@
 import PublicPage     from "../public";
-import cookie         from 'react-cookies';
-
+import nookies  from 'nookies'
+import _get from 'lodash/get'
 export class PrivatePage extends PublicPage{
 
   static async getInitialProps(ctx){
     const publicPageProps = await super.getInitialProps(ctx);
-    const token = cookie.load('token');
+    const {token} = nookies.get(ctx)
+
     if (!token) {
       ctx.router.redirect('login',ctx,{});
     }

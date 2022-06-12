@@ -4,17 +4,16 @@ import { cleanUserData } from '../../../store/actions/user/base'
 import _get         from 'lodash/get'
 import styles       from "../../../styles/account/me.module.css";
 import { connect }  from 'react-redux';
-import cookie       from 'react-cookies';
 import Link         from "next/link";
 import React        from "react";
 import { storage }  from "../../../firebase.config";
 import { getDownloadURL, ref, uploadBytes }      from "firebase/storage";
 import { v4 }       from "uuid";
 import { setLogo }  from "../../../store/actions/user/logo"
-import {SUCCESS_CODE} from '../../../settings/api';
+import Base         from "../../../components/layout/base";
+import { destroyCookie }  from 'nookies'
 
 export class AccountMe extends PrivatePage{
-
 
   inputRef = React.createRef();
 
@@ -33,7 +32,7 @@ export class AccountMe extends PrivatePage{
    */
   handleSignout = () => {
     signOut({ callbackUrl: _get(this.router.getRoute('login'), 'href')})
-    cookie.remove('token');
+    destroyCookie(null, 'token');
     this.props.cleanUserData()
   }
 
@@ -62,38 +61,36 @@ export class AccountMe extends PrivatePage{
   render(){
     const { user } = this.props;
     return (
-      <div className="account-me">
-        <section className={styles.perfilUsuario}>
-          <div className={styles.contenedorPerfil}>
-            <div className={styles.portadaPerfil}>
-              <div className={styles.sombra}></div>
-                <div className={styles.avatarPerfil}>
-                  <img className={styles.fondo} src={_get(user, 'image')} alt="img"/>
-                  <a onClick={this.openFileUploader} className={styles.cambiarFoto}>
-                    <input type="file" ref={this.inputRef} accept="image/*" hidden onChange={this.selectImage}/>
-                    <i className={styles.camera}></i> 
-                    <span>Change Photo</span>
-                  </a>
-                </div>
-                <div className={styles.datosPerfil}>
-                  <h4 className={styles.tituloUsuario}>{_get(user,"username")}</h4>
+      <Base className={styles.accountMe}>
+        <div className={styles.contenedorPerfil}>
+          <div className={styles.portadaPerfil}>
+            <div className={styles.sombra}></div>
+              <div className={styles.avatarPerfil}>
+                <img className={styles.fondo} src={_get(user, 'image')} alt="img"/>
+                <a onClick={this.openFileUploader} className={styles.cambiarFoto}>
+                  <input type="file" ref={this.inputRef} accept="image/*" hidden onChange={this.selectImage}/>
+                  <i className={styles.camera}></i> 
+                  <span>Change Photo</span>
+                </a>
               </div>
-              <div className={styles.opcionesPerfil}>
-                <button onClick={this.handleSignout}>Sign Out</button>
-              </div>
+              <div className={styles.datosPerfil}>
+                <h4 className={styles.tituloUsuario}>{_get(user,"username")}</h4>
             </div>
-            <div className={styles.menuPerfil}>
-              <ul>
-                <li>
-                  <Link {...this.router.getRoute('chat')}>
-                    <a><i className={styles.iconoPerfil}></i>Chat</a>
-                  </Link>
-                  </li>
-              </ul>
+            <div className={styles.opcionesPerfil}>
+              <button onClick={this.handleSignout}>Sign Out</button>
             </div>
           </div>
-        </section>
-      </div>
+          <div className={styles.menuPerfil}>
+            <ul>
+              <li>
+                <Link {...this.router.getRoute('chat')}>
+                  <a><i className={styles.iconoPerfil}></i>Chat</a>
+                </Link>
+                </li>
+            </ul>
+          </div>
+        </div>
+      </Base>
     );
   }
 }

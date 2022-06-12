@@ -1,23 +1,17 @@
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { createWrapper } from "next-redux-wrapper";
-import rootReducer from "./reducers";
+import { createStore, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+import reducer from './reducers';
+import storage from 'redux-persist/lib/storage';
 
-// initial states here
-const initalState = {};
+const persistConfig = {
+    key: 'root',
+    storage: storage
+};
 
-// middleware
-const middleware = [thunk];
-
-// creating store
-export const store = createStore(
-  rootReducer,
-  initalState,
-  composeWithDevTools(applyMiddleware(...middleware))
-);
-
-// assigning store to next wrapper
-const makeStore = () => store;
-
-export const wrapper = createWrapper(makeStore);
+const presistedReducer = persistReducer(persistConfig, reducer );
+const store = createStore(presistedReducer, 
+composeWithDevTools(applyMiddleware(thunk)));
+const persistor = persistStore(store);
+export { persistor, store };

@@ -15,7 +15,6 @@ package-lock.json
 
 # production
 /build
-/sql
 
 # misc
 .DS_Store
@@ -28,9 +27,7 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env*.local
-.env
+
 
 # vercel
 .vercel

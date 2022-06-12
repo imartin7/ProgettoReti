@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import cookie         from 'react-cookies';
 import _get           from 'lodash/get';
+import { setCookie }  from 'nookies'
 
 require('dotenv').config()
 
@@ -21,7 +21,7 @@ export default NextAuth({
       if (isAllowedToSignIn) {
         const token = _get(account, 'id_token');
         const { id, name, email, image } = user;
-        cookie.save('token', token, { path: '/' });
+        setCookie(null,'token', token, { path: '/' });
         setUser({
           id,name,email,image,token
         })

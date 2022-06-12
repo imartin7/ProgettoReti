@@ -1,0 +1,105 @@
+.chatContainer{
+  width: 80vw;
+  height: 80vh;
+  margin: 0 auto;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatContainer .userBox{
+  align-self: flex-end;
+  display: flex;
+  background-color: #f0f2f5 ;
+  border-radius: 5px;
+  padding: 16px;
+  margin-bottom: 1rem;
+  color: rgba(41, 49, 61, 0.836)  ;
+}
+
+.chatContainer .userBox .avatarPerfil{
+  display: block;
+  margin-right: 20px;
+  width: 70px;
+  height: 70px;
+  background-color: #D9DCF1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);
+}
+
+.chatContainer .userBox .avatarPerfil .fondo{
+  height: 100%;
+  object-fit: cover;
+}    
+
+.chatContainer .userBox .userData{
+  display: flex;
+  flex-direction: column;
+}
+
+.chatContainer .userBox .userData .myAcc{
+  margin-top: 15px;
+  padding: 8px 25px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(29, 26, 26, 0.836);
+  color: #fff;
+  cursor: pointer;
+}
+
+.chatContainer .userBox .userData .myAcc:hover {
+  background-color: rgba(41, 49, 61, 0.836);
+}
+.chatContainer .chatBox{
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 6px 0px #888888;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatContainer .chatBox .heading{
+  height: 3rem;
+  background-color: #f0f2f5;
+}
+
+.chatContainer .chatBox .messageInput,
+.chatContainer .chatBox .messageBox{
+  width: 100%;
+}
+
+.chatContainer .chatBox .messageInput{
+  height: 4rem;
+  background-color: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  padding: 13px 0;
+}
+
+.chatContainer .chatBox .messageBox{
+  height: 100%;
+  background-color: #fdfaf4;
+}
+
+.chatContainer .chatBox .messageInput .message{
+  width: 75%;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 6px 0px #888888;
+  margin-right: 10px;
+}
+
+.chatContainer .chatBox .messageInput .sendBtn{
+  padding: 8px 25px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(29, 26, 26, 0.836);
+  color: #fff;
+  cursor: pointer;
+}
+
+.chatContainer .messageInput .sendBtn:hover {
+  background-color: rgba(41, 49, 61, 0.836);
+}

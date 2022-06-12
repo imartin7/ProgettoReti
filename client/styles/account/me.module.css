@@ -1,8 +1,4 @@
-.perfilUsuario {
-  background: linear-gradient(#164d8b, transparent);
-  color: rgb(218, 34, 34);
-}
-.perfilUsuario .sombra {
+.accountMe .sombra {
   position: absolute;
   display: block;
   background: linear-gradient(transparent,rgba(0, 0, 0, .5));
@@ -11,11 +7,11 @@
   bottom: 0;
   left: 0;
 }
-.perfilUsuario .portadaPerfil,
-.perfilUsuario .sombra {
+.accountMe .portadaPerfil,
+.accountMe .sombra {
   border-radius: 0 0 20px 20px;
 }
-.perfilUsuario img {
+.accountMe img {
   width: 100%;
 }
 .contenedorPerfil {
@@ -23,13 +19,13 @@
   margin-left: auto;
   margin-right: auto;
 }
-.perfilUsuario .contenedorPerfil {
+.accountMe .contenedorPerfil {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 90%;
 }
-.perfilUsuario .portadaPerfil {
+.accountMe .portadaPerfil {
   display: block;
   background-size: cover;
   background-position: center;
@@ -38,7 +34,7 @@
   height: 20rem;
   margin-bottom: .5rem;
 }
-.perfilUsuario .avatarPerfil {
+.accountMe .avatarPerfil {
   display: block;
   width: 230px;
   height: 230px;
@@ -51,12 +47,12 @@
   border: 8px solid #FFFFFF;
   box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);
 }
-.perfilUsuario .avatarPerfil .fondo{
+.accountMe .avatarPerfil .fondo{
   height: 100%;
   object-fit: cover;
 }    
 
-.perfilUsuario .cambiarFoto {
+.accountMe .cambiarFoto {
   position: absolute;
   width: 100%;
   display: flex;
@@ -73,15 +69,15 @@
   opacity: 0;
   transition: all ease-in 200ms;
 }
-.perfilUsuario .cambiar-foto i {
+.accountMe .cambiar-foto i {
   margin-bottom: .5rem;
   font-size: 2rem;
 }
-.perfilUsuario .avatarPerfil:hover .cambiarFoto {
+.accountMe .avatarPerfil:hover .cambiarFoto {
   transform: translateY(0);
   opacity: 1;
 }
-.perfilUsuario .datosPerfil {
+.accountMe .datosPerfil {
   position: absolute;
   display: block;
   width: calc(100% - 230px - 8rem);
@@ -92,33 +88,33 @@
   padding-bottom: 1rem;
   padding-right: 1rem;
 }
-.perfilUsuario .tituloUsuario {
+.accountMe .tituloUsuario {
   font-size: 2.3rem;
   white-space: nowrap;
   margin-bottom: .5rem;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.perfilUsuario .bioUsuario {
+.accountMe .bioUsuario {
   font-size: 1em;
   margin-bottom: .75rem;
 }
-.perfilUsuario .listaPerfil {
+.accountMe .listaPerfil {
   list-style: none;
 }
-.perfilUsuario .listaPerfil li {
+.accountMe .listaPerfil li {
   display: inline-block;
   font-size: 1em;
   margin-right: 1rem;
 }
 
-.perfilUsuario .opcionesPerfil {
+.accountMe .opcionesPerfil {
   display: block;
   position: absolute;
   right: 2rem;
   top: 1rem;
 }
-.perfilUsuario .opcionesPerfil button {
+.accountMe .opcionesPerfil button {
   border: 0;
   padding: 8px 20px;
   border-radius: 8px;
@@ -128,20 +124,20 @@
   cursor: pointer;
 }
 
-.perfilUsuario .opcionesPerfil button:hover {
+.accountMe .opcionesPerfil button:hover {
   background-color: rgba(41, 49, 61, 0.836);
 }
-.perfilUsuario .menuPerfil ul {
+.accountMe .menuPerfil ul {
   display: flex;
   justify-content: flex-end;
   list-style: none;
   margin-left: calc(200px + 8rem);
   width: calc(100% - 200px - 8rem);
 }
-.perfilUsuario .menuPerfil ul li {
+.accountMe .menuPerfil ul li {
   margin-right: 1rem;
 }
-.perfilUsuario .menuPerfil a {
+.accountMe .menuPerfil a {
   display: block;
   text-decoration: none;
   color: inherit;
@@ -153,50 +149,50 @@
   background-color: rgba(29, 26, 26, 0.836);
   color: #fff;
 }
-.perfilUsuario .menuPerfil a:hover {
+.accountMe .menuPerfil a:hover {
   background-color: rgba(41, 49, 61, 0.836);
 
 }
-.perfilUsuario .iconoPerfil {
+.accountMe .iconoPerfil {
   display: none;
   margin-right: .75rem;
 }
 @media (max-width: 780px) {
-  .perfilUsuario .contenedorPerfil {
+  .accountMe .contenedorPerfil {
       width: 100%;
   }
-  .perfilUsuario .avatarPerfil {
+  .accountMe .avatarPerfil {
       left: calc(50% - 115px)
   }
-  .perfilUsuario .datosPerfil {
+  .accountMe .datosPerfil {
       bottom: 200px;
       left: 0;
       width: 100%;
       padding: 15px;
       text-align: center;
   }
-  .perfilUsuario .bioUsuario {
+  .accountMe .bioUsuario {
       font-size: 1em;
       overflow:hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
   }
-  .perfilUsuario .tituloUsuario {
+  .accountMe .tituloUsuario {
       font-size: 2.1rem;
   }
-  .perfilUsuario .portadaPerfil {
+  .accountMe .portadaPerfil {
       height: 28rem;
   }
-  .perfilUsuario .menuPerfil ul {
+  .accountMe .menuPerfil ul {
       flex-direction: column;
   }
-  .perfilUsuario .listaPerfil {
+  .accountMe .listaPerfil {
       display: block;
   }
-  .perfilUsuario .menuPerfil {
+  .accountMe .menuPerfil {
       margin-top: 2rem;
   }
-  .perfilUsuario .menuPerfil ul {
+  .accountMe .menuPerfil ul {
       display: flex;
       list-style: none;
       margin-left: auto;
@@ -207,7 +203,7 @@
       border-radius: 12px;
       box-shadow: 0 0 12px 2px rgba(0, 0, 0, .1);
   }
-  .perfilUsuario .iconoPerfil {
+  .accountMe .iconoPerfil {
       display: inline-block;
   }
 }
