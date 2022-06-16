@@ -173,9 +173,36 @@ const setUserLogo = async (req, res) => {
   }
 };
 
+const addUserImage = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (errors.array().length > 0) {
+      res.send(errors.array());
+  } else {
+    let sqlQuery = `INSERT INTO user_images (userid, image) VALUES (?,?)`;
+    let data = [req.body.id, htmlEntities.decode(req.body.url)];
+
+    database.query(sqlQuery, data, (err, row) => {
+      if (err) {
+        res.send({
+          code: SERVER_ERROR_CODE,
+          msg: "Unknown error"
+        });
+        return;
+      }
+        
+      res.send({
+        code: SUCCESS_CODE,
+        msg: "Image set properly",
+      });
+    });
+  }
+};
+
 module.exports = {
   initDatabase,
   loginUser,
   registerUser,
-  setUserLogo
+  setUserLogo,
+  addUserImage
 }

@@ -10,12 +10,14 @@ import { storage }  from "../../../firebase.config";
 import { getDownloadURL, ref, uploadBytes }      from "firebase/storage";
 import { v4 }       from "uuid";
 import { setLogo }  from "../../../store/actions/user/logo"
+import { addUserImage }  from "../../../store/actions/user/addImage"
 import Base         from "../../../components/layout/base";
 import { destroyCookie }  from 'nookies'
 
 export class AccountMe extends PrivatePage{
 
   inputRef = React.createRef();
+  logoRef = React.createRef();
 
   static mapStateToProps(store){
     const { user } = store;
@@ -24,7 +26,8 @@ export class AccountMe extends PrivatePage{
 
   static mapDispatchToProps = {
     cleanUserData,
-    setLogo
+    setLogo, 
+    addUserImage
   }
 
   /**
@@ -36,12 +39,12 @@ export class AccountMe extends PrivatePage{
     this.props.cleanUserData()
   }
 
-  openFileUploader = () => {
-    const { current } = this.inputRef;
+  openFileUploader = (logo) => {
+    const { current } = logo ? this.logoRef : this.inputRef;
     !!current && current.click();
   }
 
-  selectImage = async (event) => {
+  selectLogo = async (event) => {
     const {user} = this.props;
     const upload = _get(event, 'target.files.[0]');
     if(!!upload){
@@ -50,6 +53,23 @@ export class AccountMe extends PrivatePage{
         getDownloadURL(snapshot.ref).then((url) => {
         const {user,setLogo} = this.props;
         setLogo(this.context, {
+            id: _get(user, 'id'),
+            url
+          })
+        })
+      });
+    }
+  }
+
+  selectImage = async (event) => {
+    const {user} = this.props;
+    const upload = _get(event, 'target.files.[0]');
+    if(!!upload){
+      const imgRef = ref(storage, `users/${_get(user,'username')}/images/feed/${v4()}-${upload.name}`)
+      await uploadBytes(imgRef, upload).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+        const {user,addUserImage} = this.props;
+        addUserImage(this.context, {
             id: _get(user, 'id'),
             url
           })
@@ -67,8 +87,8 @@ export class AccountMe extends PrivatePage{
             <div className={styles.sombra}></div>
               <div className={styles.avatarPerfil}>
                 <img className={styles.fondo} src={_get(user, 'image')} alt="img"/>
-                <a onClick={this.openFileUploader} className={styles.cambiarFoto}>
-                  <input type="file" ref={this.inputRef} accept="image/*" hidden onChange={this.selectImage}/>
+                <a onClick={() => this.openFileUploader(true)} className={styles.cambiarFoto}>
+                  <input type="file" ref={this.logoRef} accept="image/*" hidden onChange={this.selectLogo}/>
                   <i className={styles.camera}></i> 
                   <span>Change Photo</span>
                 </a>
@@ -88,6 +108,18 @@ export class AccountMe extends PrivatePage{
                 </Link>
                 </li>
             </ul>
+          </div>
+          <div className={styles.imagesContainer}>
+            <div className={styles.imagesList}>
+            
+            </div>
+            <div className={styles.addImages}>
+              <a onClick={() => this.openFileUploader(false)}>
+                  <input type="file" ref={this.inputRef} accept="image/*" hidden onChange={this.selectImage}/>
+                  <i></i> 
+                  <span>Change Photo</span>
+                </a>
+            </div>  
           </div>
         </div>
       </Base>

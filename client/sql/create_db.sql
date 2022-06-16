@@ -12,3 +12,13 @@ CREATE TABLE `users` (
     `created_at`    datetime,
     `updated_at`    datetime
 ) ENGINE=InnoDb DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_images`;
+CREATE TABLE `user_images` (
+    `userid`        int(10),
+    `image`         varchar(255) default null,
+    `created_at`    datetime,
+    `updated_at`    datetime,
+    FOREIGN KEY (userid)
+        REFERENCES users(id)
+) ENGINE=InnoDb DEFAULT CHARSET=utf8;

@@ -22,4 +22,9 @@ router.post('/api/user/setLogo',
     body('url').not().isEmpty().escape(),
     controller.setUserLogo    
 );
+router.post('/api/user/addImage', 
+    body('id').not().isEmpty().escape(),
+    body('url').not().isEmpty().escape(),
+    controller.addUserImage    
+);
 module.exports = router;
