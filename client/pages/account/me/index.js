@@ -1,23 +1,34 @@
 import PrivatePage from "../../../components/page/private";
-import { signOut } from 'next-auth/react'
-import { cleanUserData } from '../../../store/actions/user/base'
-import _get         from 'lodash/get'
+import { signOut } from 'next-auth/react';
+import _get         from 'lodash/get';
+import _map         from 'lodash/map';
 import styles       from "../../../styles/account/me.module.css";
 import { connect }  from 'react-redux';
 import Link         from "next/link";
 import React        from "react";
 import { storage }  from "../../../firebase.config";
-import { getDownloadURL, ref, uploadBytes }      from "firebase/storage";
 import { v4 }       from "uuid";
-import { setLogo }  from "../../../store/actions/user/logo"
-import { addUserImage }  from "../../../store/actions/user/addImage"
-import Base         from "../../../components/layout/base";
-import { destroyCookie }  from 'nookies'
+import { setLogo }  from "../../../store/actions/user/logo";
+import { cleanUserData }  from '../../../store/actions/user/base';
+import { addUserImage }   from "../../../store/actions/user/addImage";
+import { getUserFeed }    from "../../../store/actions/user/getFeed";
+import Base               from "../../../components/layout/base";
+import { destroyCookie }  from 'nookies';
+import { getDownloadURL, ref, uploadBytes }      from "firebase/storage";
 
 export class AccountMe extends PrivatePage{
 
   inputRef = React.createRef();
   logoRef = React.createRef();
+
+  static async getInitialProps(ctx){
+    const privatePageProps = await super.getInitialProps(ctx);
+    /// TODO => Store in context
+    //getUserFeed(ctx, {userid : _get(user,'id')})
+    return {
+      ...privatePageProps
+    }
+  }
 
   static mapStateToProps(store){
     const { user } = store;
@@ -27,7 +38,8 @@ export class AccountMe extends PrivatePage{
   static mapDispatchToProps = {
     cleanUserData,
     setLogo, 
-    addUserImage
+    addUserImage,
+    getUserFeed
   }
 
   /**
@@ -48,7 +60,7 @@ export class AccountMe extends PrivatePage{
     const {user} = this.props;
     const upload = _get(event, 'target.files.[0]');
     if(!!upload){
-      const imgRef = ref(storage, `users/${_get(user,'username')}/images/logo/${v4()}-${upload.name}`)
+      const imgRef = ref(storage, `users/${_get(user,'username')}/images/profile/logo`)
       await uploadBytes(imgRef, upload).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
         const {user,setLogo} = this.props;
@@ -61,12 +73,12 @@ export class AccountMe extends PrivatePage{
     }
   }
 
-  selectImage = async (event) => {
+  selectImage = (event) => {
     const {user} = this.props;
     const upload = _get(event, 'target.files.[0]');
     if(!!upload){
       const imgRef = ref(storage, `users/${_get(user,'username')}/images/feed/${v4()}-${upload.name}`)
-      await uploadBytes(imgRef, upload).then((snapshot) => {
+      uploadBytes(imgRef, upload).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
         const {user,addUserImage} = this.props;
         addUserImage(this.context, {
@@ -104,21 +116,26 @@ export class AccountMe extends PrivatePage{
             <ul>
               <li>
                 <Link {...this.router.getRoute('chat')}>
-                  <a><i className={styles.iconoPerfil}></i>Chat</a>
+                  <a>Chat</a>
                 </Link>
                 </li>
             </ul>
           </div>
           <div className={styles.imagesContainer}>
             <div className={styles.imagesList}>
-            
+            {
+              _map(_get(user,"feed.images"), (url, i) => {
+                return (
+                  <img key={i} className={styles.feedImage} src={url}></img>
+                )
+              })
+            }
             </div>
             <div className={styles.addImages}>
-              <a onClick={() => this.openFileUploader(false)}>
-                  <input type="file" ref={this.inputRef} accept="image/*" hidden onChange={this.selectImage}/>
-                  <i></i> 
-                  <span>Change Photo</span>
-                </a>
+              <a className={styles.addImageLink} onClick={() => this.openFileUploader(false)}>
+                <input type="file" ref={this.inputRef} accept="image/*" hidden onChange={this.selectImage}/>
+                <span className={styles.addImageIcon}></span>
+              </a>
             </div>  
           </div>
         </div>

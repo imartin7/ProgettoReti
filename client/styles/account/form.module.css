@@ -105,6 +105,6 @@
 
 .providers .google::before{
   content: '\ea88';
-  font-family: 'google-icons';
+  font-family: 'todays-icons';
   margin-right: 5px;
 }

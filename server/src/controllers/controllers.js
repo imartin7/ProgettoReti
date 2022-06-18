@@ -199,10 +199,39 @@ const addUserImage = async (req, res) => {
   }
 };
 
+
+const getUserFeed = async (req,res) => {
+  const errors = validationResult(req);
+
+  if (errors.array().length > 0) {
+      res.send(errors.array());
+  } else {
+    const sqlQuery = `Select * from user_images where userid = ?`;
+    const data = [req.body.userid];
+
+    database.query(sqlQuery, data, (err, row) => {
+      if (err) {
+        res.send({
+          code: SERVER_ERROR_CODE,
+          msg: "Unknown error"
+        });
+        return;
+      }
+        
+      res.send({
+        code: SUCCESS_CODE,
+        msg: "Feed loaded",
+        data: row
+      });
+    });
+  }
+};
+
 module.exports = {
   initDatabase,
   loginUser,
   registerUser,
   setUserLogo,
-  addUserImage
+  addUserImage,
+  getUserFeed
 }

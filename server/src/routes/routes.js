@@ -27,4 +27,8 @@ router.post('/api/user/addImage',
     body('url').not().isEmpty().escape(),
     controller.addUserImage    
 );
+router.post('/api/user/getFeed', 
+    body('userid').not().isEmpty().escape(),
+    controller.getUserFeed    
+);
 module.exports = router;

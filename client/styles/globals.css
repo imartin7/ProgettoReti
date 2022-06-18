@@ -17,13 +17,13 @@ a {
 }
 
 @font-face{
-  font-family: 'google-icons';
-  src: url('/assets/icons/google/icomoon.eot');
-  src: url('/assets/icons/google/icomoon.eot#iefix') format('embedded-opentype'),
-       url('/assets/icons/google/icomoon.ttf') format('truetype'),
-       url('/assets/icons/google/icomoon.woff') format('woff'),
-       url('/assets/icons/google/icomoon.woff2') format('woff2'),
-       url('/assets/icons/google/icomoon.svg#aaa') format('svg');
+  font-family: 'todays-icons';
+  src: url('/assets/icons/icomoon.eot');
+  src: url('/assets/icons/icomoon.eot#iefix') format('embedded-opentype'),
+       url('/assets/icons/icomoon.ttf') format('truetype'),
+       url('/assets/icons/icomoon.woff') format('woff'),
+       url('/assets/icons/icomoon.woff2') format('woff2'),
+       url('/assets/icons/icomoon.svg#aaa') format('svg');
   font-weight: normal;
   font-style: normal;
 }

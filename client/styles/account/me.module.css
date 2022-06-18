@@ -25,6 +25,71 @@
   margin-right: auto;
   width: 90%;
 }
+
+.accountMe .contenedorPerfil .imagesContainer{
+  margin-top: 45px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.accountMe .contenedorPerfil .imagesContainer .imagesList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.accountMe .contenedorPerfil .imagesContainer .imagesList .feedImage{
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);
+  border: 1px solid rgba(160, 160, 160, 0.84);
+}
+
+.accountMe .contenedorPerfil .imagesContainer .addImages{
+  height: 200px;
+  width: 200px;
+  background-color: #f6f7ff;
+  display: flex;
+  box-shadow: 0 0 12px 2px rgba(0, 0, 0, .2);
+  border: 1px solid rgba(160, 160, 160, 0.84);
+}
+
+.accountMe .contenedorPerfil .imagesContainer .addImages .addImageLink{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.accountMe .contenedorPerfil .imagesContainer .addImages .addImageIcon{
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eaebef;
+  transition: all ease-in 100ms;
+}
+
+.accountMe .contenedorPerfil .imagesContainer .addImages .addImageIcon::before{
+  content: '\e90e';
+  font-family: 'todays-icons';
+  font-size: 2rem;
+  color: rgba(29, 26, 26, 0.836);
+}
+
+.accountMe .contenedorPerfil .imagesContainer .addImages .addImageLink:hover .addImageIcon{
+  background-color: rgba(134, 134, 134, 0.836);
+}
+
+.accountMe .contenedorPerfil .imagesContainer .addImages .addImageLink:hover .addImageIcon:before{
+  color: #eaebef;
+}
+
 .accountMe .portadaPerfil {
   display: block;
   background-size: cover;
@@ -141,7 +206,7 @@
   display: block;
   text-decoration: none;
   color: inherit;
-  padding: 8px 20px;
+  padding: 8px 16px;
   font-weight: bold;
   border-radius: 8px;
   transition: all ease-in 100ms;
@@ -149,14 +214,18 @@
   background-color: rgba(29, 26, 26, 0.836);
   color: #fff;
 }
+.accountMe .menuPerfil a:before{
+  content: '\e96c';
+  font-family: 'todays-icons';
+  font-size: 1rem;
+  margin-right: 10px;
+  color: #fff;
+}
 .accountMe .menuPerfil a:hover {
   background-color: rgba(41, 49, 61, 0.836);
+}
 
-}
-.accountMe .iconoPerfil {
-  display: none;
-  margin-right: .75rem;
-}
+
 @media (max-width: 780px) {
   .accountMe .contenedorPerfil {
       width: 100%;
@@ -183,9 +252,6 @@
   .accountMe .portadaPerfil {
       height: 28rem;
   }
-  .accountMe .menuPerfil ul {
-      flex-direction: column;
-  }
   .accountMe .listaPerfil {
       display: block;
   }
@@ -193,17 +259,22 @@
       margin-top: 2rem;
   }
   .accountMe .menuPerfil ul {
-      display: flex;
-      list-style: none;
       margin-left: auto;
       margin-right: auto;
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      padding-left: 0;
       padding-top: 2.5rem;
-      width: 70%;
-      background-color: #fff;
       border-radius: 12px;
-      box-shadow: 0 0 12px 2px rgba(0, 0, 0, .1);
   }
-  .accountMe .iconoPerfil {
-      display: inline-block;
+
+  .accountMe .menuPerfil ul li {
+    margin-right: 0;
+  }
+
+  .accountMe .contenedorPerfil .imagesContainer{
+    margin-right: 6%;
+    margin-left: 6%;
   }
 }

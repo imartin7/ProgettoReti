@@ -11,3 +11,10 @@ export const cleanUserData = (user) => {
     user
   }
 }
+
+export const setUserFeed = (user) => {
+  return {
+    type: "SET_USER_FEED",
+    user
+  }
+}
