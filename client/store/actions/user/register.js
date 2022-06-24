@@ -1,7 +1,7 @@
 
 export const register = (ctx, variables) => {
   return async (dispatch) => {
-    const response = await fetch('http://127.0.0.1:9898/api/register', {
+    const response = await fetch(ctx.baseUrl+'/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

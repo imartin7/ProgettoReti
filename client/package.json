@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "babel-plugin-transform-define": "^2.0.1",
     "dotenv": "^16.0.0",
     "firebase": "^9.8.2",
     "less": "^2.7.3",

@@ -3,8 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import _get           from 'lodash/get';
 import { setCookie }  from 'nookies'
 
-require('dotenv').config()
-
 export default NextAuth({
   // OAuth authentication provider
   providers: [

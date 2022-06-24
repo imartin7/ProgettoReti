@@ -74,7 +74,7 @@ export class Login extends PublicPage{
             <input name="password" type="password" placeholder="Enter password"/><br/>
             <input type="submit" value="Log In"/>
             <Link {...this.router.getRoute('register')}>
-              <a href="#">Don't have an account?</a>
+              <a href="#">Dont have an account?</a>
             </Link>
             {!!error && <span className={styles.errorMsg}>{error}</span>}
           </form>

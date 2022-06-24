@@ -17,11 +17,13 @@ class TodaysApp extends App{
   static updateAppContext(appContext){
     let {ctx} = appContext;
     ctx.router = new TodaysRouter();
+    ctx.baseUrl = process.env.REACT_APP_BASE_API_URL;
   }
 
   initServices = () => {
     const router  = new TodaysRouter();
-    return { router};
+    const baseUrl = process.env.REACT_APP_BASE_API_URL;
+    return { router, baseUrl};
   }
 
   render(){
