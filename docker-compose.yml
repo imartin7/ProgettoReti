@@ -1,0 +1,52 @@
+version: "3.3"
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - mysqldb
+      - server
+      - client
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_PORT=80
+
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysqldb
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    command: --init-file /sql/create_db.sql
+    volumes:
+      - ./sql/create_db.sql:/sql/create_db.sql
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+
+  # Nodejs
+  server:
+    build: ./server
+    container_name: server
+    volumes:
+      - ./server/:/var/www/server
+    depends_on:
+      - mysqldb
+    ports:
+      - "3001:3001"
+
+  # Nextjs
+  client:
+    build: ./client
+    container_name: client
+    volumes:
+      - ./client/:/var/www/client
+    depends_on:
+      - mysqldb
+      - server
+    ports:
+      - "3000:3000" 

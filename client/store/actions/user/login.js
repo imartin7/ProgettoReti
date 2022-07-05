@@ -4,7 +4,7 @@ import _get             from 'lodash/get';
 
 export const login = (ctx, variables) => {
   return async (dispatch) => {
-    const response = await fetch('http://127.0.0.1:9898/api/login', {
+    const response = await fetch(ctx.baseUrl+'/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

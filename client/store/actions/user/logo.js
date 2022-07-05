@@ -4,7 +4,7 @@ import { setUserData }  from './base';
 
 export const setLogo = (ctx, variables) => {
   return async (dispatch) => {
-    const response = await fetch('http://127.0.0.1:9898/api/user/setLogo', {
+    const response = await fetch(ctx.baseUrl+'/api/user/setLogo', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

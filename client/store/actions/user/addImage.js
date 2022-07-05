@@ -4,7 +4,7 @@ import { getUserFeed }  from './getFeed';
 
 export const addUserImage = (ctx, variables) => {
   return async (dispatch) => {
-    const response = await fetch('http://127.0.0.1:9898/api/user/addImage', {
+    const response = await fetch(ctx.baseUrl+'/api/user/addImage', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

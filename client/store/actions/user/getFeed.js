@@ -4,7 +4,7 @@ import _get             from 'lodash/get';
 
 export const getUserFeed = (ctx, variables) => {
   return async (dispatch) => {
-    const response = await fetch('http://127.0.0.1:9898/api/user/getFeed', {
+    const response = await fetch(ctx.baseUrl+'/api/user/getFeed', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
