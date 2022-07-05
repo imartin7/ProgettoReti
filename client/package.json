@@ -15,7 +15,7 @@
     "less": "^2.7.3",
     "lodash": "^4.17.21",
     "next": "12.1.4",
-    "next-auth": "^4.3.2",
+    "next-auth": "^4.8.0",
     "next-compose-plugins": "^2.2.1",
     "next-plugin-antd-less": "^1.8.0",
     "next-redux-wrapper": "^7.0.5",

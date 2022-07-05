@@ -3,7 +3,6 @@ import { setUserData }  from './base';
 import _get             from 'lodash/get';
 
 export const login = (ctx, variables) => {
-  console.log("LOGIN", ctx);
   return async (dispatch) => {
     const response = await fetch(ctx.baseUrl+'/api/login', {
       method: 'POST',

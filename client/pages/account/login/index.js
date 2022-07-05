@@ -61,7 +61,6 @@ export class Login extends PublicPage{
 
   render(){
     const {providers,error} = this.state;
-
     return (
       <div className={styles.formContainer}>
         <div className={styles.formBlock}>

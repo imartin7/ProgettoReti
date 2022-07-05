@@ -1,14 +1,22 @@
-# Stage 1
-FROM node:17.9.0 as build-stage
-WORKDIR /client
-COPY package.json .
+# pull the Node.js Docker image
+FROM node:alpine
+
+# create the directory inside the container
+WORKDIR /var/www/client
+
+# copy the package.json files from local machine to the workdir in container
+COPY package.json ./
+
+# run npm install in our local machine
 RUN npm install
+
+# copy the generated modules and all other files to the container
 COPY . .
-ARG REACT_APP_BASE_API_URL
-ENV REACT_APP_BASE_API_URL=$REACT_APP_BASE_API_URL
+
 RUN npm run build
-# Stage 2
-FROM nginx:1.17.0-alpine
-COPY --from=build-stage /client/build /usr/share/nginx/html
-EXPOSE $REACT_DOCKER_PORT
-CMD nginx -g 'daemon off;'
+
+# our app is running on port 3000 within the container, so need to expose it
+EXPOSE 3000
+
+# the command that starts our app
+CMD ["npm", "start"]
