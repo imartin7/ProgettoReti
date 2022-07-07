@@ -42,7 +42,7 @@ I have used Github to store the project.
 4 : Login Oauth
 6 : Docker
 7 and 8 : Github and README
-9: Csrf is used with Google authentication and the password is also stored with an encryption system
+9: Csrf is used with Google authentication, the password is also stored with an encryption system and also use of environment variables included in .env files that aren't uploaded to the repository via .gitignore to maintain the security and integrity of the project.
 
 
 Author: Inés Martín Mateos
