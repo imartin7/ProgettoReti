@@ -2,6 +2,8 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import _get           from 'lodash/get';
 import { setCookie }  from 'nookies'
+import { setUserData }from '../../../store/actions/user/base'
+import { store } from '../../../store/store'
 
 export default NextAuth({
   // OAuth authentication provider
@@ -15,14 +17,19 @@ export default NextAuth({
   callbacks: {
     async signIn({ user, account, profile }) {
       const isAllowedToSignIn = true
-
       if (isAllowedToSignIn) {
         const token = _get(account, 'id_token');
         const { id, name, email, image } = user;
         setCookie(null,'token', token, { path: '/' });
-        setUser({
-          id,name,email,image,token
-        })
+        await store.dispatch(setUserData({
+          id,
+          name,
+          email,
+          image,
+          token,
+          username: email,
+          lastname: ''
+        }));
         return true
       } else {
         return '/account/login'

@@ -23,6 +23,7 @@ export class AccountMe extends PrivatePage{
 
   static async getInitialProps(ctx){
     const privatePageProps = await super.getInitialProps(ctx);
+    console.log("GET INITIAL", privatePageProps)
     /// TODO => Store in context
     //getUserFeed(ctx, {userid : _get(user,'id')})
     return {
@@ -48,6 +49,7 @@ export class AccountMe extends PrivatePage{
   handleSignout = () => {
     signOut({ callbackUrl: _get(this.router.getRoute('login'), 'href')})
     destroyCookie(null, 'token');
+    destroyCookie(null, 'next-auth.session-token');
     this.props.cleanUserData()
   }
 

@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { persistor, store } from "../store/store";
+import { store } from "../store/store";
 import { Provider } from "react-redux";
 import { SessionProvider } from "next-auth/react";
 import App          from 'next/app';
@@ -37,13 +37,11 @@ class TodaysApp extends App{
     return (
       <>
         <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
             <Context.Provider value={services}>
               <SessionProvider session={pageProps.session}>
                 <Component {...pageProps} />
               </SessionProvider>
             </Context.Provider>
-          </PersistGate>
         </Provider>
       </>
     );

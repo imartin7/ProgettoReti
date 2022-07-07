@@ -5,14 +5,16 @@ export class PrivatePage extends PublicPage{
 
   static async getInitialProps(ctx){
     const publicPageProps = await super.getInitialProps(ctx);
-    const {token} = nookies.get(ctx)
+    const cookies = nookies.get(ctx);
+    const token = _get(cookies, 'token');
+    const nextAuthToken = _get(cookies, 'next-auth.session-token');
 
-    if (!token) {
+    if (!token && !nextAuthToken) {
       ctx.router.redirect('login',ctx,{});
     }
     
     return {
-      ...publicPageProps
+      ...publicPageProps, token, nextAuthToken
     }
   }
 

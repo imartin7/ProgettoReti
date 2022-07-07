@@ -8,9 +8,25 @@ import { login }      from '../../../store/actions/user/login';
 import {SUCCESS_CODE} from '../../../settings/api';
 import { signIn, getProviders } from 'next-auth/react'
 import { setCookie }  from 'nookies'
+import nookies        from 'nookies'
 
 
 export class Login extends PublicPage{
+
+  static async getInitialProps(ctx){
+    const publicPageProps = await super.getInitialProps(ctx);
+    const cookies = nookies.get(ctx);
+    const token   = _get(cookies, 'token');
+    const nextAuthToken = _get(cookies, 'next-auth.session-token');
+
+    if (!!token || !!nextAuthToken) {
+      ctx.router.redirect('myAccount',ctx,{});
+    }
+    
+    return {
+      ...publicPageProps, token, nextAuthToken
+    }
+  }
 
   static mapDispatchToProps = { login };
 
