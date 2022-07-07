@@ -20,22 +20,19 @@ The server is mounted with Expressjs because it allows to link very easily the d
 ### Mysql + Firebase
 The database is managed by MySQL and Firebase is also used to store the images that are uploaded to the application. In the mysql database we will be able to find the routes to the images in firebase which we will be able to recover from the frontend.
 
+### Docker
+I have used docker to automate the process.
+
 ## Project start-up
 1. Clone the repository
-2. Start Database
-  2.1. Execute the following command:
-  ```docker run -p 3306:3306 --name nodejs-mysql -e MYSQL_ROOT_PASSWORD=<pass> -e MYSQL_DATABASE=todays-rrr -d mysql:5.7```
-  The password is sent by mail to the teacher.
+2. Compile the docker-rebuild file that raises the server, client, nginx and mysql.
 
-  2.2. Execute the commands:
-  ```sudo docker container ls -la; sudo docker start <id>```
-
-  2.3. Launch the sql script:
-  ```mysql -u root -p todays-rrr < ./client/sql/create_db.sql```
-3. From /client execute npm install
-4. From /server execute npm install
-5. From /client/ execute npm run dev
-6. From /server/ execute node index.js
+---- Remarks just in case: Probably you need to compile that commands:
+      --> If you have problems with the port 3306: 
+        sudo netstat -p -nlp | grep 3306
+        sudo kill XXXXX
+      --> In the route ../client/ : 
+        npm run build
 
 ## Github
 I have used Github to store the project.
@@ -44,7 +41,8 @@ I have used Github to store the project.
 1, 2 and 3 : Firebase and Google Oauth
 4 : Login Oauth
 6 : Docker
-7 : Github and README
+7 and 8 : Github and README
+9: Csrf is used with Google authentication and the password is also stored with an encryption system
 
 
 Author: Inés Martín Mateos

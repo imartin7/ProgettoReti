@@ -13,7 +13,7 @@ import { cleanUserData }  from '../../../store/actions/user/base';
 import { addUserImage }   from "../../../store/actions/user/addImage";
 import { getUserFeed }    from "../../../store/actions/user/getFeed";
 import Base               from "../../../components/layout/base";
-import { destroyCookie }  from 'nookies';
+import nookies            from 'nookies';
 import { getDownloadURL, ref, uploadBytes }      from "firebase/storage";
 
 export class AccountMe extends PrivatePage{
@@ -23,7 +23,6 @@ export class AccountMe extends PrivatePage{
 
   static async getInitialProps(ctx){
     const privatePageProps = await super.getInitialProps(ctx);
-    console.log("GET INITIAL", privatePageProps)
     /// TODO => Store in context
     //getUserFeed(ctx, {userid : _get(user,'id')})
     return {
@@ -46,11 +45,19 @@ export class AccountMe extends PrivatePage{
   /**
    * Logs out user
    */
-  handleSignout = () => {
-    signOut({ callbackUrl: _get(this.router.getRoute('login'), 'href')})
-    destroyCookie(null, 'token');
-    destroyCookie(null, 'next-auth.session-token');
-    this.props.cleanUserData()
+  handleSignout = async () => {
+    const cookies       = nookies.get(this.context);
+    const token         = _get(cookies, 'token');
+    const nextAuthToken = _get(cookies, 'next-auth.session-token');
+
+    if(!!token){
+      nookies.destroy(this.context, 'token');
+    }else if(!!nextAuthToken){
+      nookies.destroy(this.context, 'next-auth.session-token');
+    }
+
+    await this.props.cleanUserData()
+    this.router.redirect('login')
   }
 
   openFileUploader = (logo) => {
