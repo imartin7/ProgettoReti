@@ -31,4 +31,7 @@ router.post('/api/user/getFeed',
     body('userid').not().isEmpty().escape(),
     controller.getUserFeed    
 );
+router.post('/api/user/chat', 
+    controller.sendUserMessage    
+);
 module.exports = router;

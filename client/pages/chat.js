@@ -4,6 +4,7 @@ import { connect }  from 'react-redux';
 import styles       from  '../styles/chat.module.css'
 import Base         from "../components/layout/base";
 import Link       from "next/link";
+import { sendUserMessage }   from "../store/actions/user/chat";
 
 export class Chat extends PrivatePage{
 
@@ -18,11 +19,21 @@ export class Chat extends PrivatePage{
     } */
     return {};
   }
+  
+  static mapDispatchToProps = {
+    sendUserMessage
+  }
 
   static mapStateToProps(store){
     const { user } = store;
     return {user};
   }
+
+  sendMessage = () => {
+    const { sendUserMessage } = this.props;
+    sendUserMessage(this.context);
+  }
+
  
   render(){
     const { user } = this.props;
@@ -48,7 +59,7 @@ export class Chat extends PrivatePage{
             </div>
             <div className={styles.messageInput}>
               <input type="text" className={styles.message}/>
-              <button className={styles.sendBtn}>Send</button>
+              <button className={styles.sendBtn} onClick={this.sendMessage}>Send</button>
             </div>
           </div>
         </div>

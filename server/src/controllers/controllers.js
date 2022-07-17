@@ -3,6 +3,7 @@ const database = require('../db');
 const bcrypt   = require("bcrypt");
 const jwt      = require("jsonwebtoken");
 const htmlEntities = require("html-entities");
+const publisher = require("../chat/publisher");
 const SUCCESS_CODE      = 200;
 const ERROR_CODE        = 400;
 const SERVER_ERROR_CODE = 500;
@@ -218,11 +219,20 @@ const getUserFeed = async (req,res) => {
   }
 };
 
+const sendUserMessage = async (req,res) => {
+  console.log(publisher);
+  publisher.publisher();
+  return res.send({
+    code: SUCCESS_CODE
+  });
+};
+
 module.exports = {
   initDatabase,
   loginUser,
   registerUser,
   setUserLogo,
   addUserImage,
-  getUserFeed
+  getUserFeed,
+  sendUserMessage
 }
